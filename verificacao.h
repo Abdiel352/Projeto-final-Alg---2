@@ -5,7 +5,7 @@
 #include "contato.h"
 #include "menu.h"
 
-bool verificarTelefoneExistente(Contato *agenda);
+bool verificarTelefoneExistente(const char *telefone);
 bool validarCpf(Contato *agenda);
 bool verificarEmailExistente(Contato *agenda);
 bool validarNascimento(Contato *agenda);
