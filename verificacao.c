@@ -3,16 +3,22 @@
 #include <string.h>
 #include "verificacao.h"
 
-bool verificarTelefoneExistente(Contato *agenda)
+#include <string.h>
+#include <ctype.h>
+#include "verificacao.h"
+
+bool verificarTelefoneExistente(const char *telefone)
 {
-    if (strlen(agenda->telefone) == 10 || strlen(agenda->telefone) == 11)
+    if (strlen(telefone) == 10 || strlen(telefone) == 11)
     {
+        for (int i = 0; telefone[i] != '\0'; i++)
+        {
+            if (!isdigit(telefone[i]))
+                return false;
+        }
         return true;
     }
-    else
-    {
-        return false;
-    }
+    return false;
 }
 
 bool validarCpf(Contato *agenda)

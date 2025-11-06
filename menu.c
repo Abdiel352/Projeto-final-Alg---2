@@ -15,12 +15,13 @@ void menuCadastro(Contato *agenda, int *quantidade)
         printf("3. Voltar\n");
 
         scanf("%d", &condicao);
+        bool dadosValidos = false;
         switch (condicao)
         {
         case 1:
+            printf("=== Casdastrar Pessoa ===\n");
             if (*quantidade <= 100)
             {
-                bool dadosValidos = false;
                 while (!dadosValidos)
                 {
                     printf("Digite o nome: ");
@@ -82,28 +83,6 @@ void menuCadastro(Contato *agenda, int *quantidade)
 
                 (*quantidade)++;
                 printf("Contato cadastrado com sucesso!\n");
-
-                printf("Deseja cadastrar um telefone? (S ou s para sim / N ou n para não): ");
-                char resposta;
-                scanf(" %c", &resposta);
-                if (resposta == 'S' || resposta == 's')
-                {
-                    dadosValidos = false;
-                    while (!dadosValidos)
-                    {
-                        printf("Digite o telefone: ");
-                        scanf("%11s", agenda[*quantidade - 1].telefone);
-                        if (verificarTelefoneExistente(&agenda[*quantidade - 1]))
-                        {
-                            dadosValidos = true;
-                            printf("Telefone cadastrado com sucesso!\n");
-                        }
-                        else
-                        {
-                            printf("Telefone inválido. Deve ter 10 ou 11 dígitos.\n");
-                        }
-                    }
-                }
             }
             else if (*quantidade > 100)
             {
@@ -115,7 +94,6 @@ void menuCadastro(Contato *agenda, int *quantidade)
                 }
                 agenda = temp;
 
-                bool dadosValidos = false;
                 while (!dadosValidos)
                 {
                     printf("Digite o nome: ");
@@ -176,34 +154,68 @@ void menuCadastro(Contato *agenda, int *quantidade)
 
                 (*quantidade)++;
                 printf("Contato cadastrado com sucesso!\n");
+            }
 
-                printf("Deseja cadastrar um telefone? (S ou s para sim / N ou n para não): ");
-                char resposta;
-                scanf(" %c", &resposta);
-                if (resposta == 'S' || resposta == 's')
+            printf("Deseja cadastrar um telefone para esta pessoa? (S/N): ");
+            char resposta;
+            scanf(" %c", &resposta); // Espaço antes do %c para ignorar whitespace
+
+            agenda[*quantidade - 1].telefones = NULL; // Inicializar como NULL
+            agenda[*quantidade - 1].num_telefones = 0;
+
+            if (resposta == 'S' || resposta == 's')
+            {
+                dadosValidos = false;
+                char novoTelefone[12];
+                while (!dadosValidos)
                 {
-                    dadosValidos = false;
-                    while (!dadosValidos)
+                    printf("Digite o telefone: ");
+                    scanf("%11s", novoTelefone);
+                    if (verificarTelefoneExistente(novoTelefone))
                     {
-                        printf("Digite o telefone: ");
-                        scanf("%11s", agenda[*quantidade - 1].telefone);
-                        if (verificarTelefoneExistente(&agenda[*quantidade - 1]))
-                        {
-                            dadosValidos = true;
-                            printf("Telefone cadastrado com sucesso!\n");
-                        }
-                        else
-                        {
-                            printf("Telefone inválido. Deve ter 10 ou 11 dígitos.\n");
-                        }
+                        adicionarTelefone(&agenda[*quantidade - 1], novoTelefone);
+                        printf("Telefone cadastrado com sucesso!\n");
+                        dadosValidos = true;
+                    }
+                    else
+                    {
+                        printf("Telefone inválido. Deve ter 10 ou 11 dígitos.\n");
                     }
                 }
             }
+            agenda[*quantidade - 1].id = *quantidade - 1;
             salvarContatos(agenda, *quantidade);
             break;
 
         case 2:
-           
+            printf("=== Casdastrar telefone ===\n");
+            printf("Informe o Nome da Pessoa: \n");
+            char nomeBusca[31];
+            scanf("%30s", nomeBusca);
+            printf("Informe o ID da Pessoa: \n");
+            int idBusca;
+            scanf("%d", &idBusca);
+            printf("Digite o telefone: ");
+            char telefone[12];
+            scanf("%11s", telefone);
+            Contato *contatoEncontrado = buscarContatoPorNomeEId(agenda, *quantidade, nomeBusca, idBusca);
+            if (contatoEncontrado != NULL)
+            {
+                if (verificarTelefoneExistente(telefone))
+                {
+                    adicionarTelefone(contatoEncontrado, telefone);
+                    printf("Telefone cadastrado com sucesso!\n");
+                    salvarContatos(agenda, *quantidade);
+                }
+                else
+                {
+                    printf("Telefone inválido. Deve ter 10 ou 11 dígitos.\n");
+                }
+            }
+            else
+            {
+                printf("Contato nao encontrado com o nome e ID fornecidos.\n");
+            }
             break;
 
         case 3:

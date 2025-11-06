@@ -69,3 +69,33 @@ Cada pessoa possui os seguintes campos:
 
 ## 🌳 Estrutura Resumida dos Menus
 
+
+### Cadastrar
+
+- Pessoa
+- Telefone
+    - Nome
+    - Telefone
+    - IDPessoa
+    - Retornar
+- Retornar
+
+
+### Editar
+
+- Pessoa
+    - Nome
+        - Nome
+        - Data de Nascimento
+        - CPF
+        - Retornar
+    - IDPessoa
+        - Nome
+        - Data de Nascimento
+        - CPF
+        - Retornar
+
+    - Retornar
+
+
+
