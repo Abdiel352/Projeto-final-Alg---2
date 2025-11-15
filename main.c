@@ -26,13 +26,13 @@ int main()
             menuCadastro(agenda, &quantidade);
             break;
         case 2:
-            // Listar contatos
+            menuEditar(agenda, &quantidade);
             break;
         case 3:
-            // Buscar contato
+            menuExcluir(agenda, &quantidade);
             break;
         case 4:
-            // Remover contato
+            menuConsultar(agenda, quantidade);
             break;
         case 5:
             salvarContatos(agenda, quantidade);

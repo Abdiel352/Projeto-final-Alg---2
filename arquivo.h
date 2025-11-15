@@ -9,5 +9,6 @@ void buscarContatoPorId(Contato *agenda, int quantidade, int idBusca, Contato *c
 Contato *buscarContatoPorNomeEId(Contato *agenda, int quantidade, const char *nome, int id);
 void adicionarTelefone(Contato *contato, const char *telefone);
 void liberarContato(Contato *contato);
+void salvarEdicao(Contato *agenda, int quantidade, int idEditado);
 
 #endif

@@ -9,6 +9,6 @@ bool verificarTelefoneExistente(const char *telefone);
 bool validarCpf(Contato *agenda);
 bool verificarEmailExistente(Contato *agenda);
 bool validarNascimento(Contato *agenda);
-bool verificarNome(Contato *agenda, int *quantidade);
+bool verificarNome(const char *nome, Contato *agenda, int quantidade);
 
 #endif

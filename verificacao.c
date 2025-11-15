@@ -1,24 +1,24 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "verificacao.h"
-
-#include <string.h>
 #include <ctype.h>
 #include "verificacao.h"
 
 bool verificarTelefoneExistente(const char *telefone)
 {
-    if (strlen(telefone) == 10 || strlen(telefone) == 11)
+    if (strlen(telefone) != 10 && strlen(telefone) != 11)
     {
-        for (int i = 0; telefone[i] != '\0'; i++)
-        {
-            if (!isdigit(telefone[i]))
-                return false;
-        }
-        return true;
+        return false;
     }
-    return false;
+    for (int i = 0; telefone[i] != '\0'; i++)
+    {
+        if (!isdigit(telefone[i]))
+        {
+            return false;
+        }
+    }
+
+    return true;
 }
 
 bool validarCpf(Contato *agenda)
@@ -112,29 +112,21 @@ bool validarNascimento(Contato *agenda)
     return true;
 }
 
-bool verificarNome(Contato *agenda, int *quantidade)
+bool verificarNome(const char *nome, Contato *agenda, int quantidade)
 {
-    if (strlen(agenda->nome) < 2)
+    if (strlen(nome) < 2)
     {
         return false;
     }
 
-    FILE *file = fopen("contatos.csv", "r");
-    if (file == NULL)
+    for (int i = 0; i < quantidade; i++)
     {
-        printf("Arquivo não encontrado. Será criado um novo ao salvar.\n");
-        return true;
-    }
-    char nomeLido[31];
-    while (fscanf(file, "%99[^:]:%*[^\n]\n", nomeLido) != EOF)
-    {
-
-        if (strcmp(agenda->nome, nomeLido) == 0)
+        if (strcmp(agenda[i].nome, nome) == 0)
         {
-            fclose(file);
+            printf("Este nome já existe na agenda!\n");
             return false;
         }
     }
-    fclose(file);
+
     return true;
 }
