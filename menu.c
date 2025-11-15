@@ -20,7 +20,7 @@ void menuCadastro(Contato *agenda, int *quantidade)
         switch (condicao)
         {
         case 1:
-            printf("=== Casdastrar Pessoa ===\n");
+            printf("=== Cadastrar Pessoa ===\n");
             if (*quantidade <= 100)
             {
                 while (!dadosValidos)
