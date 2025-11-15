@@ -341,6 +341,94 @@ void menuEditar(Contato *agenda, int *quantidade)
     }
 }
 
+// Helper function to perform the actual editing of a contact
+static void editarContatoHelper(Contato *agenda, int *quantidade, int indice)
+{
+    printf("Que informação deseja editar de %s:\n", agenda[indice].nome);
+    printf("1. Nome\n");
+    printf("2. Data de Nascimento\n");
+    printf("3. CPF\n");
+    printf("4. Email\n");
+    printf("5. Voltar\n");
+
+    int escolhaEdicao;
+    scanf("%d", &escolhaEdicao);
+
+    switch (escolhaEdicao)
+    {
+    case 1:
+    {
+        char novoNome[31];
+        bool nomeValido = false;
+        while (!nomeValido)
+        {
+            printf("Digite o novo nome: ");
+            scanf("%30s", novoNome);
+
+            // Verificar se o nome já existe EM OUTROS contatos
+            bool nomeExiste = false;
+            for (int j = 0; j < *quantidade; j++)
+            {
+                if (j != indice && strcmp(agenda[j].nome, novoNome) == 0)
+                {
+                    nomeExiste = true;
+                    break;
+                }
+            }
+
+            if (nomeExiste)
+            {
+                printf("Este nome já existe na agenda!\n");
+            }
+            else if (strlen(novoNome) < 2)
+            {
+                printf("Nome inválido. O nome deve ter pelo menos 2 caracteres.\n");
+            }
+            else
+            {
+                strcpy(agenda[indice].nome, novoNome);
+                nomeValido = true;
+            }
+        }
+        break;
+    }
+    case 2:
+        printf("Digite a nova data de nascimento: ");
+        scanf("%10s", agenda[indice].nascimento);
+        while (!validarNascimento(&agenda[indice]))
+        {
+            printf("Data inválida. Digite novamente (DD/MM/AAAA): ");
+            scanf("%10s", agenda[indice].nascimento);
+        }
+        break;
+    case 3:
+        printf("Digite o novo CPF: ");
+        scanf("%11s", agenda[indice].cpf);
+        while (!validarCpf(&agenda[indice]))
+        {
+            printf("CPF inválido. Digite novamente: ");
+            scanf("%11s", agenda[indice].cpf);
+        }
+        break;
+    case 4:
+        printf("Digite o novo email: ");
+        scanf("%30s", agenda[indice].email);
+        while (!verificarEmailExistente(&agenda[indice]))
+        {
+            printf("Email inválido. Digite novamente: ");
+            scanf("%30s", agenda[indice].email);
+        }
+        break;
+    case 5:
+        return;
+    default:
+        printf("Opção inválida!\n");
+        return;
+    }
+    salvarEdicao(agenda, *quantidade, agenda[indice].id);
+    printf("Contato editado com sucesso!\n");
+}
+
 void menuEditarPorNome(Contato *agenda, int *quantidade)
 {
     char nomeBusca[31];
@@ -353,89 +441,7 @@ void menuEditarPorNome(Contato *agenda, int *quantidade)
         if (strcmp(agenda[i].nome, nomeBusca) == 0)
         {
             encontrado = true;
-            printf("Que informação deseja editar de %s:\n", agenda[i].nome);
-            printf("1. Nome\n");
-            printf("2. Data de Nascimento\n");
-            printf("3. CPF\n");
-            printf("4. Email\n");
-            printf("5. Voltar\n");
-
-            int escolhaEdicao;
-            scanf("%d", &escolhaEdicao);
-
-            switch (escolhaEdicao)
-            {
-            case 1:
-            {
-                char novoNome[31];
-                bool nomeValido = false;
-                while (!nomeValido)
-                {
-                    printf("Digite o novo nome: ");
-                    scanf("%30s", novoNome);
-
-                    // Verificar se o nome já existe EM OUTROS contatos
-                    bool nomeExiste = false;
-                    for (int j = 0; j < *quantidade; j++)
-                    {
-                        if (j != i && strcmp(agenda[j].nome, novoNome) == 0)
-                        {
-                            nomeExiste = true;
-                            break;
-                        }
-                    }
-
-                    if (nomeExiste)
-                    {
-                        printf("Este nome já existe na agenda!\n");
-                    }
-                    else if (strlen(novoNome) < 2)
-                    {
-                        printf("Nome inválido. O nome deve ter pelo menos 2 caracteres.\n");
-                    }
-                    else
-                    {
-                        strcpy(agenda[i].nome, novoNome);
-                        nomeValido = true;
-                    }
-                }
-                break;
-            }
-            case 2:
-                printf("Digite a nova data de nascimento: ");
-                scanf("%10s", agenda[i].nascimento);
-                while (!validarNascimento(&agenda[i]))
-                {
-                    printf("Data inválida. Digite novamente (DD/MM/AAAA): ");
-                    scanf("%10s", agenda[i].nascimento);
-                }
-                break;
-            case 3:
-                printf("Digite o novo CPF: ");
-                scanf("%11s", agenda[i].cpf);
-                while (!validarCpf(&agenda[i]))
-                {
-                    printf("CPF inválido. Digite novamente: ");
-                    scanf("%11s", agenda[i].cpf);
-                }
-                break;
-            case 4:
-                printf("Digite o novo email: ");
-                scanf("%30s", agenda[i].email);
-                while (!verificarEmailExistente(&agenda[i]))
-                {
-                    printf("Email inválido. Digite novamente: ");
-                    scanf("%30s", agenda[i].email);
-                }
-                break;
-            case 5:
-                return;
-            default:
-                printf("Opção inválida!\n");
-                return;
-            }
-            salvarEdicao(agenda, *quantidade, agenda[i].id);
-            printf("Contato editado com sucesso!\n");
+            editarContatoHelper(agenda, quantidade, i);
             return;
         }
     }
@@ -458,89 +464,7 @@ void menuEditarPorID(Contato *agenda, int *quantidade)
         if (agenda[i].id == idBusca)
         {
             encontrado = true;
-            printf("Que informação deseja editar de %s:\n", agenda[i].nome);
-            printf("1. Nome\n");
-            printf("2. Data de Nascimento\n");
-            printf("3. CPF\n");
-            printf("4. Email\n");
-            printf("5. Voltar\n");
-
-            int escolhaEdicao;
-            scanf("%d", &escolhaEdicao);
-
-            switch (escolhaEdicao)
-            {
-            case 1:
-            {
-                char novoNome[31];
-                bool nomeValido = false;
-                while (!nomeValido)
-                {
-                    printf("Digite o novo nome: ");
-                    scanf("%30s", novoNome);
-
-                    // Verificar se o nome já existe EM OUTROS contatos
-                    bool nomeExiste = false;
-                    for (int j = 0; j < *quantidade; j++)
-                    {
-                        if (j != i && strcmp(agenda[j].nome, novoNome) == 0)
-                        {
-                            nomeExiste = true;
-                            break;
-                        }
-                    }
-
-                    if (nomeExiste)
-                    {
-                        printf("Este nome já existe na agenda!\n");
-                    }
-                    else if (strlen(novoNome) < 2)
-                    {
-                        printf("Nome inválido. O nome deve ter pelo menos 2 caracteres.\n");
-                    }
-                    else
-                    {
-                        strcpy(agenda[i].nome, novoNome);
-                        nomeValido = true;
-                    }
-                }
-                break;
-            }
-            case 2:
-                printf("Digite a nova data de nascimento: ");
-                scanf("%10s", agenda[i].nascimento);
-                while (!validarNascimento(&agenda[i]))
-                {
-                    printf("Data inválida. Digite novamente (DD/MM/AAAA): ");
-                    scanf("%10s", agenda[i].nascimento);
-                }
-                break;
-            case 3:
-                printf("Digite o novo CPF: ");
-                scanf("%11s", agenda[i].cpf);
-                while (!validarCpf(&agenda[i]))
-                {
-                    printf("CPF inválido. Digite novamente: ");
-                    scanf("%11s", agenda[i].cpf);
-                }
-                break;
-            case 4:
-                printf("Digite o novo email: ");
-                scanf("%30s", agenda[i].email);
-                while (!verificarEmailExistente(&agenda[i]))
-                {
-                    printf("Email inválido. Digite novamente: ");
-                    scanf("%30s", agenda[i].email);
-                }
-                break;
-            case 5:
-                return;
-            default:
-                printf("Opção inválida!\n");
-                return;
-            }
-            salvarEdicao(agenda, *quantidade, agenda[i].id);
-            printf("Contato editado com sucesso!\n");
+            editarContatoHelper(agenda, quantidade, i);
             return;
         }
     }
