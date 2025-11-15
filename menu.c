@@ -665,7 +665,7 @@ void excluirTelefone(Contato *agenda, int *quantidade)
         case 1:
         {
             printf("=== Excluir Telefone por Nome ===\n");
-            printf("Digite o nome da pessoa a ser excluida: ");
+            printf("Digite o nome da pessoa cujo telefone deseja excluir: ");
             char nomeBusca[31];
             scanf("%30s", nomeBusca);
             for (int i = 0; i < *quantidade; i++)
