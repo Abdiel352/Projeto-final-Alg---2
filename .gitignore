@@ -1,0 +1,16 @@
+# Compiled executables
+programa
+programa.exe
+*.exe
+*.out
+*.o
+
+# IDE files
+.vscode/
+.idea/
+*.swp
+*~
+
+# OS files
+.DS_Store
+Thumbs.db
