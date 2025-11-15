@@ -228,6 +228,29 @@ void menuCadastro(Contato *agenda, int *quantidade)
     } while (condicao != 3);
 }
 
+static void cadastrarTelefoneParaContato(Contato *contato, Contato *agenda, int quantidade)
+{
+    char novoTelefone[12];
+    printf("Digite o telefone: ");
+    scanf("%11s", novoTelefone);
+
+    if (!verificarTelefoneExistente(novoTelefone))
+    {
+        printf("Telefone inválido. Não foi cadastrado.\n");
+        return;
+    }
+
+    adicionarTelefone(contato, novoTelefone);
+    if (salvarContatos(agenda, quantidade))
+    {
+        printf("Telefone salvo com sucesso.\n");
+    }
+    else
+    {
+        printf("Erro ao salvar no arquivo.\n");
+    }
+}
+
 void menuCadastrarTelefonePorNome(Contato *agenda, int *quantidade)
 {
     char nomeBusca[31];
@@ -238,25 +261,7 @@ void menuCadastrarTelefonePorNome(Contato *agenda, int *quantidade)
     {
         if (strcmp(agenda[i].nome, nomeBusca) == 0)
         {
-            char novoTelefone[12];
-            printf("Digite o telefone: ");
-            scanf("%11s", novoTelefone);
-
-            if (!verificarTelefoneExistente(novoTelefone))
-            {
-                printf("Telefone inválido. Não foi cadastrado.\n");
-                return;
-            }
-
-            adicionarTelefone(&agenda[i], novoTelefone);
-            if (salvarContatos(agenda, *quantidade))
-            {
-                printf("Telefone salvo com sucesso.\n");
-            }
-            else
-            {
-                printf("Erro ao salvar no arquivo.\n");
-            }
+            cadastrarTelefoneParaContato(&agenda[i], agenda, *quantidade);
             return;
         }
     }
@@ -274,25 +279,7 @@ void menuCadastrarTelefonePorID(Contato *agenda, int *quantidade)
     {
         if (agenda[i].id == idBusca)
         {
-            char novoTelefone[12];
-            printf("Digite o telefone: ");
-            scanf("%11s", novoTelefone);
-
-            if (!verificarTelefoneExistente(novoTelefone))
-            {
-                printf("Telefone inválido. Não foi cadastrado.\n");
-                return;
-            }
-
-            adicionarTelefone(&agenda[i], novoTelefone);
-            if (salvarContatos(agenda, *quantidade))
-            {
-                printf("Telefone salvo com sucesso.\n");
-            }
-            else
-            {
-                printf("Erro ao salvar no arquivo.\n");
-            }
+            cadastrarTelefoneParaContato(&agenda[i], agenda, *quantidade);
             return;
         }
     }
