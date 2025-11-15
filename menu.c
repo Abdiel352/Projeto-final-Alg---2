@@ -5,6 +5,14 @@
 #include "verificacao.h"
 #include "arquivo.h"
 
+// Prototypes for functions defined below
+void menuCadastrarTelefonePorNome(Contato *agenda, int *quantidade);
+void menuCadastrarTelefonePorID(Contato *agenda, int *quantidade);
+void menuEditarPorNome(Contato *agenda, int *quantidade);
+void menuEditarPorID(Contato *agenda, int *quantidade);
+void excluirPessoa(Contato *agenda, int *quantidade);
+void excluirTelefone(Contato *agenda, int *quantidade);
+
 void menuCadastro(Contato *agenda, int *quantidade)
 {
     int condicao = 1;
@@ -20,7 +28,7 @@ void menuCadastro(Contato *agenda, int *quantidade)
         switch (condicao)
         {
         case 1:
-            printf("=== Casdastrar Pessoa ===\n");
+            printf("=== Cadastrar Pessoa ===\n");
             if (*quantidade <= 100)
             {
                 while (!dadosValidos)
@@ -48,7 +56,7 @@ void menuCadastro(Contato *agenda, int *quantidade)
                     }
                     else
                     {
-                        printf("Data de nascimento inválida! Use o formato DD/MM/AAAA\n");
+                        printf("Data de nascimento invalida! Use o formato DD/MM/AAAA\n");
                     }
                 }
 
@@ -63,7 +71,7 @@ void menuCadastro(Contato *agenda, int *quantidade)
                     }
                     else
                     {
-                        printf("CPF Inválido. Digite novamente.\n");
+                        printf("CPF Invalido. Digite novamente.\n");
                     }
                 }
 
@@ -78,7 +86,7 @@ void menuCadastro(Contato *agenda, int *quantidade)
                     }
                     else
                     {
-                        printf("E-mail Inválido. Deve conter @ e ter pelo menos 10 caracteres.\n");
+                        printf("E-mail Invalido. Deve conter @ e ter pelo menos 10 caracteres.\n");
                     }
                 }
 
@@ -90,7 +98,7 @@ void menuCadastro(Contato *agenda, int *quantidade)
                 Contato *temp = realloc(agenda, sizeof(Contato) * (*quantidade + 1));
                 if (temp == NULL)
                 {
-                    printf("Erro ao alocar memória!\n");
+                    printf("Erro ao alocar memoria!\n");
                     return;
                 }
                 agenda = temp;
@@ -119,7 +127,7 @@ void menuCadastro(Contato *agenda, int *quantidade)
                     }
                     else
                     {
-                        printf("Data de nascimento inválida! Use o formato DD/MM/AAAA\n");
+                        printf("Data de nascimento invalida! Use o formato DD/MM/AAAA\n");
                     }
                 }
 
@@ -134,7 +142,7 @@ void menuCadastro(Contato *agenda, int *quantidade)
                     }
                     else
                     {
-                        printf("CPF Inválido. Digite novamente.\n");
+                        printf("CPF Invalido. Digite novamente.\n");
                     }
                 }
 
@@ -149,7 +157,7 @@ void menuCadastro(Contato *agenda, int *quantidade)
                     }
                     else
                     {
-                        printf("E-mail Inválido. Deve conter @ e ter pelo menos 10 caracteres.\n");
+                        printf("E-mail Invalido. Deve conter @ e ter pelo menos 10 caracteres.\n");
                     }
                 }
 
@@ -159,9 +167,9 @@ void menuCadastro(Contato *agenda, int *quantidade)
 
             printf("Deseja cadastrar um telefone para esta pessoa? (S/N): ");
             char resposta;
-            scanf(" %c", &resposta); // Espaço antes do %c para ignorar whitespace
+            scanf(" %c", &resposta);
 
-            agenda[*quantidade - 1].telefones = NULL; // Inicializar como NULL
+            agenda[*quantidade - 1].telefones = NULL;
             agenda[*quantidade - 1].num_telefones = 0;
 
             if (resposta == 'S' || resposta == 's')
@@ -180,7 +188,7 @@ void menuCadastro(Contato *agenda, int *quantidade)
                     }
                     else
                     {
-                        printf("Telefone inválido. Deve ter 10 ou 11 dígitos.\n");
+                        printf("Telefone invalido. Deve ter 10 ou 11 digitos.\n");
                     }
                 }
             }
@@ -189,7 +197,7 @@ void menuCadastro(Contato *agenda, int *quantidade)
             break;
 
         case 2:
-            printf("=== Casdastrar telefone ===\n");
+            printf("=== Cadastrar telefone ===\n");
             printf("=== Pesquisar por =====\n");
             printf("Nome(1)\n");
             printf("IDpessoa(2)\n");
@@ -244,7 +252,7 @@ void menuCadastrarTelefonePorNome(Contato *agenda, int *quantidade)
 
             if (!verificarTelefoneExistente(novoTelefone))
             {
-                printf("Telefone inválido. Não foi cadastrado.\n");
+                printf("Telefone invalido. Nao foi cadastrado.\n");
                 return;
             }
 
@@ -280,7 +288,7 @@ void menuCadastrarTelefonePorID(Contato *agenda, int *quantidade)
 
             if (!verificarTelefoneExistente(novoTelefone))
             {
-                printf("Telefone inválido. Não foi cadastrado.\n");
+                printf("Telefone invalido. Nao foi cadastrado.\n");
                 return;
             }
 
@@ -353,7 +361,7 @@ void menuEditarPorNome(Contato *agenda, int *quantidade)
         if (strcmp(agenda[i].nome, nomeBusca) == 0)
         {
             encontrado = true;
-            printf("Que informação deseja editar de %s:\n", agenda[i].nome);
+            printf("Que informacao deseja editar de %s:\n", agenda[i].nome);
             printf("1. Nome\n");
             printf("2. Data de Nascimento\n");
             printf("3. CPF\n");
@@ -374,7 +382,6 @@ void menuEditarPorNome(Contato *agenda, int *quantidade)
                     printf("Digite o novo nome: ");
                     scanf("%30s", novoNome);
 
-                    // Verificar se o nome já existe EM OUTROS contatos
                     bool nomeExiste = false;
                     for (int j = 0; j < *quantidade; j++)
                     {
@@ -387,11 +394,11 @@ void menuEditarPorNome(Contato *agenda, int *quantidade)
 
                     if (nomeExiste)
                     {
-                        printf("Este nome já existe na agenda!\n");
+                        printf("Este nome ja existe na agenda!\n");
                     }
                     else if (strlen(novoNome) < 2)
                     {
-                        printf("Nome inválido. O nome deve ter pelo menos 2 caracteres.\n");
+                        printf("Nome invalido. O nome deve ter pelo menos 2 caracteres.\n");
                     }
                     else
                     {
@@ -406,7 +413,7 @@ void menuEditarPorNome(Contato *agenda, int *quantidade)
                 scanf("%10s", agenda[i].nascimento);
                 while (!validarNascimento(&agenda[i]))
                 {
-                    printf("Data inválida. Digite novamente (DD/MM/AAAA): ");
+                    printf("Data invalida. Digite novamente (DD/MM/AAAA): ");
                     scanf("%10s", agenda[i].nascimento);
                 }
                 break;
@@ -415,7 +422,7 @@ void menuEditarPorNome(Contato *agenda, int *quantidade)
                 scanf("%11s", agenda[i].cpf);
                 while (!validarCpf(&agenda[i]))
                 {
-                    printf("CPF inválido. Digite novamente: ");
+                    printf("CPF invalido. Digite novamente: ");
                     scanf("%11s", agenda[i].cpf);
                 }
                 break;
@@ -424,14 +431,14 @@ void menuEditarPorNome(Contato *agenda, int *quantidade)
                 scanf("%30s", agenda[i].email);
                 while (!verificarEmailExistente(&agenda[i]))
                 {
-                    printf("Email inválido. Digite novamente: ");
+                    printf("Email invalido. Digite novamente: ");
                     scanf("%30s", agenda[i].email);
                 }
                 break;
             case 5:
                 return;
             default:
-                printf("Opção inválida!\n");
+                printf("Opcao invalida!\n");
                 return;
             }
             salvarEdicao(agenda, *quantidade, agenda[i].id);
@@ -442,7 +449,7 @@ void menuEditarPorNome(Contato *agenda, int *quantidade)
 
     if (!encontrado)
     {
-        printf("Contato não encontrado!\n");
+        printf("Contato nao encontrado!\n");
     }
 }
 
@@ -458,7 +465,7 @@ void menuEditarPorID(Contato *agenda, int *quantidade)
         if (agenda[i].id == idBusca)
         {
             encontrado = true;
-            printf("Que informação deseja editar de %s:\n", agenda[i].nome);
+            printf("Que informacao deseja editar de %s:\n", agenda[i].nome);
             printf("1. Nome\n");
             printf("2. Data de Nascimento\n");
             printf("3. CPF\n");
@@ -479,7 +486,6 @@ void menuEditarPorID(Contato *agenda, int *quantidade)
                     printf("Digite o novo nome: ");
                     scanf("%30s", novoNome);
 
-                    // Verificar se o nome já existe EM OUTROS contatos
                     bool nomeExiste = false;
                     for (int j = 0; j < *quantidade; j++)
                     {
@@ -492,11 +498,11 @@ void menuEditarPorID(Contato *agenda, int *quantidade)
 
                     if (nomeExiste)
                     {
-                        printf("Este nome já existe na agenda!\n");
+                        printf("Este nome ja existe na agenda!\n");
                     }
                     else if (strlen(novoNome) < 2)
                     {
-                        printf("Nome inválido. O nome deve ter pelo menos 2 caracteres.\n");
+                        printf("Nome invalido. O nome deve ter pelo menos 2 caracteres.\n");
                     }
                     else
                     {
@@ -511,7 +517,7 @@ void menuEditarPorID(Contato *agenda, int *quantidade)
                 scanf("%10s", agenda[i].nascimento);
                 while (!validarNascimento(&agenda[i]))
                 {
-                    printf("Data inválida. Digite novamente (DD/MM/AAAA): ");
+                    printf("Data invalida. Digite novamente (DD/MM/AAAA): ");
                     scanf("%10s", agenda[i].nascimento);
                 }
                 break;
@@ -520,7 +526,7 @@ void menuEditarPorID(Contato *agenda, int *quantidade)
                 scanf("%11s", agenda[i].cpf);
                 while (!validarCpf(&agenda[i]))
                 {
-                    printf("CPF inválido. Digite novamente: ");
+                    printf("CPF invalido. Digite novamente: ");
                     scanf("%11s", agenda[i].cpf);
                 }
                 break;
@@ -529,14 +535,14 @@ void menuEditarPorID(Contato *agenda, int *quantidade)
                 scanf("%30s", agenda[i].email);
                 while (!verificarEmailExistente(&agenda[i]))
                 {
-                    printf("Email inválido. Digite novamente: ");
+                    printf("Email invalido. Digite novamente: ");
                     scanf("%30s", agenda[i].email);
                 }
                 break;
             case 5:
                 return;
             default:
-                printf("Opção inválida!\n");
+                printf("Opcao invalida!\n");
                 return;
             }
             salvarEdicao(agenda, *quantidade, agenda[i].id);
@@ -547,7 +553,7 @@ void menuEditarPorID(Contato *agenda, int *quantidade)
 
     if (!encontrado)
     {
-        printf("Contato não encontrado!\n");
+        printf("Contato nao encontrado!\n");
     }
 }
 
@@ -665,7 +671,7 @@ void excluirTelefone(Contato *agenda, int *quantidade)
         case 1:
         {
             printf("=== Excluir Telefone por Nome ===\n");
-            printf("Digite o nome da pessoa a ser excluida: ");
+            printf("Digite o nome da pessoa: ");
             char nomeBusca[31];
             scanf("%30s", nomeBusca);
             for (int i = 0; i < *quantidade; i++)
@@ -713,7 +719,7 @@ void excluirTelefone(Contato *agenda, int *quantidade)
         case 2:
         {
             printf("=== Excluir Telefone por ID ===\n");
-            printf("Digite o ID da pessoa a ser excluida: ");
+            printf("Digite o ID da pessoa: ");
             int idBusca;
             scanf("%d", &idBusca);
             for (int i = 0; i < *quantidade; i++)
@@ -774,7 +780,7 @@ void menuConsultar(Contato *agenda, int quantidade)
     {
         printf("=== Consultar Contatos ===\n");
         printf("1. Consultar pessoas\n");
-        printf("2. telefone\n");
+        printf("2. Telefone\n");
         printf("3. Voltar\n");
         scanf("%d", &escolha);
         switch (escolha)
@@ -861,9 +867,9 @@ void menuConsultar(Contato *agenda, int quantidade)
         }
         case 2:
         {
-            printf("1.Consultar telefone por nome\n");
-            printf("2.Consultar telefone por ID\n");
-            printf("3.Voltar\n");
+            printf("1. Consultar telefone por nome\n");
+            printf("2. Consultar telefone por ID\n");
+            printf("3. Voltar\n");
             int opcaoTelConsulta;
             scanf("%d", &opcaoTelConsulta);
             switch (opcaoTelConsulta)
