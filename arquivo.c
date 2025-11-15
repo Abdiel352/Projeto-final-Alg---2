@@ -100,6 +100,18 @@ void buscarContatoPorId(Contato *agenda, int quantidade, int idBusca, Contato *c
     memset(contatoEncontrado, 0, sizeof(Contato));
 }
 
+Contato *buscarContatoPorNomeEId(Contato *agenda, int quantidade, const char *nome, int id)
+{
+    for (int i = 0; i < quantidade; i++)
+    {
+        if (agenda[i].id == id && strcmp(agenda[i].nome, nome) == 0)
+        {
+            return &agenda[i];
+        }
+    }
+    return NULL;
+}
+
 void adicionarTelefone(Contato *contato, const char *telefone)
 {
     if (telefone == NULL)
