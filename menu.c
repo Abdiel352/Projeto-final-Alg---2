@@ -713,7 +713,7 @@ void excluirTelefone(Contato *agenda, int *quantidade)
         case 2:
         {
             printf("=== Excluir Telefone por ID ===\n");
-            printf("Digite o ID da pessoa a ser excluida: ");
+            printf("Digite o ID da pessoa cujo telefone deseja excluir: ");
             int idBusca;
             scanf("%d", &idBusca);
             for (int i = 0; i < *quantidade; i++)
