@@ -1,0 +1,13 @@
+# Compiled binaries
+programa
+programa.exe
+*.exe
+*.out
+
+# Object files
+*.o
+*.obj
+
+# Temporary files
+*.csv
+*_temp.csv
