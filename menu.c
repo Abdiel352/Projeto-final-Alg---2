@@ -189,7 +189,7 @@ void menuCadastro(Contato *agenda, int *quantidade)
             break;
 
         case 2:
-            printf("=== Casdastrar telefone ===\n");
+            printf("=== Cadastrar telefone ===\n");
             printf("=== Pesquisar por =====\n");
             printf("Nome(1)\n");
             printf("IDpessoa(2)\n");
